@@ -62,26 +62,40 @@ public class RedBlackTree<T extends Comparable<T>> {
     /* Flips the color of node and its children. Assume that NODE has both left
        and right children. */
     void flipColors(RBTreeNode<T> node) {
-        // TODO: YOUR CODE HERE
+        node.left.isBlack = true;
+        node.right.isBlack = true;
+        node.isBlack = false;
     }
 
     /* Rotates the given node to the right. Returns the new root node of
        this subtree. For this implementation, make sure to swap the colors
        of the new root and the old root!*/
     RBTreeNode<T> rotateRight(RBTreeNode<T> node) {
-        // TODO: YOUR CODE HERE
-        return null;
+        var newRoot = node.left;
+        node.left = newRoot.right;
+        newRoot.right = node;
+        // 边的颜色由作为出度的当前节点决定,需要需要互换new root and the old root的颜色
+        boolean tempColor = node.isBlack;
+        node.isBlack = newRoot.isBlack;
+        newRoot.isBlack = tempColor;
+        return newRoot;
     }
 
     /* Rotates the given node to the left. Returns the new root node of
        this subtree. For this implementation, make sure to swap the colors
        of the new root and the old root! */
     RBTreeNode<T> rotateLeft(RBTreeNode<T> node) {
-        // TODO: YOUR CODE HERE
-        return null;
+        var newRoot = node.right;
+        node.right = newRoot.left;
+        newRoot.left = node;
+        boolean tempColor = node.isBlack;
+        node.isBlack = newRoot.isBlack;
+        newRoot.isBlack = tempColor;
+        return newRoot;
     }
 
     public void insert(T item) {
+        // 和b树一样,插入可能导致新的root
         root = insert(root, item);
         root.isBlack = true;
     }
@@ -104,16 +118,18 @@ public class RedBlackTree<T extends Comparable<T>> {
         } else {
             node.right = insert(node.right, item);
         }
-
-        // TODO: YOUR CODE HERE
-
-        // Rotate left operation
-
-        // Rotate right operation
-
-        // Color flip
-
-        return null; //fix this return statement
+        // 右倾扭转
+        if (isRed(node.right) && !isRed(node.left)) {
+            node = rotateLeft(node);
+        }
+        // LL 三层转成层,更新指针到最新顶节点,记得flip
+        if (node.left != null && isRed(node.left.left) && isRed(node.left)) {
+            node = rotateRight(node);
+        }
+        if (isRed(node.left) && isRed(node.right)) {
+            flipColors(node);
+        }
+        return node; //fix this return statement
     }
 
     /* Returns whether the given node is red. Null nodes (children of leaf
