@@ -3,6 +3,7 @@ package main;
 import edu.princeton.cs.algs4.In;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class WordNet {
     public TreeMap<Integer, GraphNode> nodes = new TreeMap<>();
@@ -25,10 +26,7 @@ public class WordNet {
         while (!in.isEmpty()) {
             String nextLine = in.readLine();
             String[] splitLine = nextLine.split(",");
-            List<String> inputs = new ArrayList<>();
-            for (int i = 1; i < splitLine.length - 1; i++) {
-                inputs.add(splitLine[i]);
-            }
+            List<String> inputs = Arrays.stream(splitLine[1].split(" ")).collect(Collectors.toList());
             int id = Integer.parseInt(splitLine[0]);
             nodes.put(id, new GraphNode(id, inputs));
         }
