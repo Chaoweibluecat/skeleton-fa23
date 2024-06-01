@@ -4,7 +4,7 @@ import edu.princeton.cs.algs4.In;
 
 public class FileReadDemo {
     public static void main(String[] args) {
-        In in = new In("./data/ngrams/very_short.csv");
+        In in = new In("././proj2a/data/ngrams/very_short.csv");
         int i = 0;
 
         while (!in.isEmpty()) {

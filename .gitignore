@@ -72,3 +72,10 @@ synsets1000-subgraph.txt
 # Please don't unless you know what you're doing
 *.iml
 **/.idea/**
+/data/wordnet/hyponyms11.txt
+/data/wordnet/hyponyms14.txt
+/data/wordnet/hyponyms16.txt
+/data/wordnet/synsets11.txt
+/data/wordnet/synsets14.txt
+/data/wordnet/synsets16.txt
+/data/ngrams/very_short.csv
